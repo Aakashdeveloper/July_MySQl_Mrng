@@ -1,0 +1,155 @@
+SHOW DATABASES;
+CREATE DATABASE ticket_booking;
+use ticket_booking;
+
+CREATE TABLE customers(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(45),
+    last_name VARCHAR(45) NOT NULL,
+    email VARCHAR(45) NOT NULL UNIQUE
+);
+
+CREATE TABLE rooms(
+    id INT PRIMARY KEY auto_increment,
+    name VARCHAR(45) NOT NULL,
+    no_seats INT NOT NULL
+);
+
+CREATE TABLE films(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL UNIQUE,
+    length_min INT NOT NULL
+);
+
+CREATE TABLE screenings(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    film_id INT NOT NULL,
+    room_id INT NOT NULL,
+    start_time DATETIME NOT NULL,
+    FOREIGN KEY (film_id) REFERENCES films(id),
+    FOREIGN KEY (room_id) REFERENCES rooms(id)
+);
+
+CREATE TABLE seats(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    rown CHAR(1) NOT NULL,
+    number INT NOT NULL,
+    room_id INT NOT NULL,
+    FOREIGN KEY (room_id) REFERENCES rooms(id)
+);
+
+CREATE TABLE bookings(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    screening_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    FOREIGN KEY (screening_id) REFERENCES screenings(id),
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+CREATE TABLE reserved_seat(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id INT NOT NULL,
+    seat_id INT NOT NULL,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id),
+    FOREIGN KEY (seat_id) REFERENCES seats(id)
+);
+
+
+/////////////////////////////
+JOINS
+/////////////////
+Inner Join> Will retrieve data only when there is matching value in both the tables
+Left Join> Will retrieve data from the left table(table1) and matching row from the right table(table2)
+Right Join> Will retrieve data from the right table(table2) and matching row from the left table(table1)
+
+///////////////////////////////
+
+SELECT rooms.name,seats.rown,seats.number from rooms INNER JOIN seats 
+on rooms.id = seats.room_id;
+
+SELECT * from seats;
+SELECT * from rooms;
+SHOW TABLES;
+SELECT * from bookings;
+SELECT * from customers;
+
+SELECT c.first_name,c.email,b.customer_id FROM customers c
+LEFT JOIN bookings b
+ON c.id = b.customer_id
+WHERE c.first_name='Jerry'
+
+SELECT c.first_name,c.email,b.customer_id,b.screening_id,s.film_id,s.room_id,s.start_time
+FROM customers c JOIN bookings b
+ON c.id = b.customer_id
+JOIN screenings s 
+ON s.id = b.screening_id
+
+
+
+SELECT c.first_name,c.email,b.customer_id,b.screening_id,s.film_id,s.room_id,s.start_time,f.name,r.name
+FROM customers c JOIN bookings b
+ON c.id = b.customer_id
+JOIN screenings s 
+ON s.id = b.screening_id
+JOIN films f
+on f.id = s.film_id
+JOIN rooms r
+on r.id = s.room_id
+
+
+
+
+SELECT b.customer_id,c.first_name,c.email,f.name as film_name,r.name as room_name,s.start_time,
+rs.seat_id as seatid, se.rown as rownumber , se.number as seatnumber
+FROM customers c JOIN bookings b
+ON c.id = b.customer_id
+JOIN screenings s 
+ON s.id = b.screening_id
+JOIN films f
+on f.id = s.film_id
+JOIN rooms r
+on r.id = s.room_id
+JOIN reserved_seat rs
+ON rs.booking_id = b.id
+JOIN seats se
+on se.id = rs.seat_id
+
+
+//////////////
+SELECT b.customer_id,c.first_name,c.email,f.name as film_name,r.name as room_name,s.start_time,
+se.rown as rownumber , se.number as seatumber
+FROM customers c JOIN bookings b
+ON c.id = b.customer_id 
+JOIN screenings s 
+ON s.id = b.screening_id
+JOIN films f
+on f.id = s.film_id
+JOIN rooms r
+on r.id = s.room_id
+JOIN reserved_seat rs
+ON rs.booking_id = b.id
+JOIN seats se
+on se.id = rs.seat_id
+
+Math.floor(10.1)
+10
+Math.floor(10.9)
+10
+Math.ceil(10.9)
+11
+Math.ceil(10.1)
+11
+Math.round(10.1)
+10
+Math.round(10.4)
+10
+Math.round(10.5)
+11
+Math.PI
+3.141592653589793
+Math.E
+2.718281828459045
+Math.sin()
+NaN
+Math.sin(1)
+0.8414709848078965

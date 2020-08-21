@@ -1,0 +1,118 @@
+primary key > Unique in the table no duplicate
+foreign key> key which help to relate other table in same database
+    A column which is related to primary key in another table
+Not Null > A column cannot contains any null values
+Unique > A column cannot have any duplicate values
+Default > if no value inserted set Default value
+------------------------------------
+
+> GoldenKey => primary key
+> Empty Diamond > Normal column no relation and not even primary key
+> Green Diamond> Not foreign and not Null
+> Red Diamond > Not Null and foreign key
+
+
+
+
+NORMALIZATION
+> Process of efficiently organizing data in a database
+> WHY?
+> To eliminate redundant data.
+> To only store related data in a table
+
+1N
+2N
+3N
+
+Student | YEAR | Class | Teacher
+John    |  9   | React | Ankit
+Tom     |  9   | React | Ankit
+Sarah   |  8   | Node  | Aakash
+Charile |  9   | React | Ankit
+Barnes  |  10  | Sql   | Bhumika
+
+
+Benefits:
+> Reduce storage space
+> Reduece insert,update and deletion 
+> improve query performance
+
+
+What is 1NF
+> No Repeated rows of data
+> Colums only Conatins a single value
+> The table has a primary key
+
+What is 2NF
+> They conform to 1NF
+> Every column that is not a primary key of the table is 
+  dependent on the whole of the primary key
+
+What is 3NF
+> They conform to 2NF
+> Every column that is not a primary key  is only
+  dependent on the whole of the primary key
+
+/////1NF////
+Student | Year | Class
+Paul    | 11   | Math
+Peggy   | 10   | History
+Paul    | 11   | Math
+Brain   | 8    | English, Chemistry
+Linda   | 7    | Math, History, Biology
+
+Student | Year | Class
+Paul    | 11   | Math
+Peggy   | 10   | History
+Brain   | 8    | English
+Brain   | 8    | Chemistry
+Linda   | 7    | Math
+Linda   | 7    | History
+Linda   | 7    | Biology
+
+//2NF////
+
+Student | Subject | GRADE | AGE
+Natasha | React   | A     | 15
+Natasha | Angular | B     | 15
+Daniel  | Node    | C     | 16
+Simon   | React   | A     | 14
+Emma    | SQL     | B     | 14
+------------------------------------------
+
+id| Student_id | Subject | GRADE
+1 | 1     | React   | A    
+2 | 1     | Angular | B     
+3 | 2     | Node    | C     
+4 | 3     | React   | A     
+5 | 4     | SQL     | B     
+
+Student | AGE  | Name
+1       | 15   | Natasha
+2       | 16   | Daniel
+3       | 14   | Simon
+4       | 14   | Emma
+
+
+//3NF////
+Subject | YEAR | Star PUPIL | Star PUPIL date 
+MATH    | 2015 | Mathew     | 1999-03-21
+Engl    | 2015 | William     | 1999-03-21
+Hind    | 2015 | Georgina     | 1999-03-21
+MATH    | 2016 | Brain     | 1999-03-21
+Phys    | 2017 | William     | 1999-03-21
+
+
+Subject | YEAR | Star PUPIL 
+MATH    | 2015 | Mathew    
+Engl    | 2015 | William   
+Hind    | 2015 | Georgina    
+MATH    | 2016 | Brain    
+Phys    | 2017 | William    
+
+Star PUPIL | Star PUPIL date 
+Mathew     | 1999-03-21
+William     | 1999-03-21
+Georgina     | 1999-03-21
+Brain     | 1999-03-21
+William     | 1999-03-21

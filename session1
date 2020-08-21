@@ -1,0 +1,83 @@
+>>>>>
+Postgres
+Postgres https://hackernoon.com/dont-install-postgres-docker-pull-postgres-bee20e200198
+<<<<<<<
+
+>>>>>
+Setup MySql In Docker
+<<<<<<
+https://dzone.com/articles/docker-for-mac-mysql-setup
+
+1> Install Docker 
+2> Navigate in the cmd prompt/termainl
+3> docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD=password mysql/mysql-server
+4> Check image is there or not
+    >Docker image ls
+5> Check Container is running or not
+    >Docker ps 
+6> GO inside the mysql terminal   
+   >docker exec -it mysql bash
+7> Login into mysql
+    > mysql -uroot -ppassword
+8> 
+mysql> CREATE USER 'arun'@'%' IDENTIFIED BY 'password';
+9>
+mysql> GRANT ALL PRIVILEGES ON * . * TO 'arun'@'%';
+
+SQl
+---------------
+RDBMS
+mysql
+oracle
+db2
+maria
+aurora
+postgress
+
+
+NoSQL
+------------
+mongoDB
+Cassendra
+
+
+
+////////////////////
+SQL                VS    NoSQL
+Structured data          UnStructured data 
+
+
+RollNo |  Hindi  | English
+ 1     |  90     | 78
+ 2     |  80     | 91
+
+
+
+NoSQL
+-----------
+RollNo | Father | Mother | Sister
+1      | yes    |        |
+2      |  yes   |  yes   |
+3      |   Yes  |        |  yes   
+
+{
+    RollNo:1,
+    father:yes
+},
+{
+    RollNo:2,
+    father:yes
+    mother:yes
+},
+{
+    RollNo:3,
+    father:yes
+    sister:yes
+}
+
+
+CREATE TABLE test {
+    id INT AUTO_INCERMENT PRIMARY KEY,
+    name VARCHAR(30),
+    age INT
+}

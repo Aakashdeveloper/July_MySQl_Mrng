@@ -1,0 +1,131 @@
+SHOW DATaBASES;
+use coffee_store;
+SHOW tables;
+
+SELECT * FROM products;
+SELECT name, coffee_origin from products where coffee_origin="BRAZIL";
+SELECT distinct coffee_origin from products;
+SELECT name,price,coffee_origin AS country from products;
+SELECT * FROM orders;
+
+
+SELECT distinct customer_id from orders
+where order_time between '2016-01-01' AND '2016-01-03';
+
+SELECT  customer_id from orders
+where order_time between '2016-01-01' AND '2016-01-03';
+
+Select customer_id from orders where product_id=4;
+
+SELECT name, price from products order by name asc;
+
+SELECT COUNT(customer_id),product_id 
+from orders 
+group by product_id
+order by count(customer_id);
+
+SELECT COUNT(customer_id),product_id 
+from orders 
+group by product_id
+having count(customer_id)>20
+order by count(customer_id) desc;
+
+
+SELECT * from products;
+
+SELECT * FROM products
+where price>=3 and coffee_origin='BRAZIL';
+
+SELECT * FROM products
+where price<3 or coffee_origin='Indonesia';
+
+SELECT * from products
+where NOT coffee_origin='Brazil' AND NOT coffee_origin='Finland';
+
+SELECT * from products
+where coffee_origin='Brazil' AND (price=2.50 or price=3);
+
+
+SELECT * from orders;
+
+INSERT INTO orders(product_id,customer_id,order_time) VALUES (null,2,'2020-02-23 09-02-11');
+
+INSERT INTO orders(product_id,customer_id,order_time) VALUES (null,5,'2020-03-23 10-02-11');
+
+SELECT * from orders
+where product_id is null;
+
+SELECT * from orders
+where product_id is not null;
+
+SELECT * from orders;
+
+
+SELECT * from products
+where coffee_origin IN('India', 'Finland','Brazil');
+
+SELECT * FROM customers;
+
+SELECT * from customers
+where first_name like '%a%';
+
+SELECT * from customers
+where first_name like '__a%';
+
+SELECT * from customers
+where first_name like '__a%f';
+
+SELECT * from customers
+where first_name NOT like '__a%';
+
+
+///////////////
+VIEWS
+////////////
+
+CREATE VIEW Male_Customers AS
+SELECT first_name,phone_number
+FROM customers
+WHERE gender='M';
+
+SELECT * from Male_Customers;
+
+CREATE OR Replace VIEW Male_Customers AS
+SELECT first_name,phone_number
+FROM customers
+WHERE gender='F';
+
+DROP View Male_Customers;
+
+08:56:00	SELECT * from customers INTO outfile '/abc.text'	Error Code: 1290. The MySQL server is running with the --secure-file-priv option so it cannot execute this statement	0.0044 sec
+
+
+https://www.digitalocean.com/community/questions/mysql-can-t-use-load-data-infile-secure-file-priv-option-is-preventing-execution
+This is part of my.cnf file:
+secure-file-priv = ""
+
+
+//Export
+SELECT * from customers
+INTO outfile '/abc.text';
+
+SELECT * from cutsomers  INTO outfile '/abc.text'
+fields terminated by ',' enclosed by '"';
+lines terminated by '\n';
+
+//Import
+LOAD DATA LOCAL INFILE 'dump.txt' into table mytable(a,b,c)
+
+
+LOAD DATA LOCAL INFILE 'dump.txt' into table mytable
+fields terminated by ','
+line terminated by '\n';
+
+
+
+//Export
+> mysqldump -u root -p password > dump.txt
+
+//Import
+> mysqldump -u root -p password < dump.txt
+> https://github.com/Aakashdeveloper/NodeWithMysql/blob/master/app.js

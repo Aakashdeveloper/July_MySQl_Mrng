@@ -1,0 +1,104 @@
+SHOW DATABASES;
+create database test;
+USE test;
+
+CREATE TABLE addresses(
+	id int,
+    house_number int,
+    city varchar(30),
+    postcode varchar(7)
+);
+
+CREATE TABLE people(
+	id int,
+    first_name varchar(30),
+    last_name varchar(20),
+    address_id int
+);
+
+Create Table pets(
+	id int,
+    name varchar(20),
+    species varchar(20),
+    owner_id int
+)
+
+///////////
+Add/ Remove Primary Key
+/////////
+
+-----SQL TO ADD Primary Key
+ALTER TABLE <tablename>
+ADD Primary Key (columnname)
+
+---SQL TO REMOVE Primary Key
+ALTER TABLE <tablename>
+DROP Primary KEy(columnname)
+
+ALTER TABLE addresses ADD PRIMARY KEY (id);
+ALTER TABLE addresses DROP PRIMARY KEY;
+
+////
+Add foregin constraint
+//////
+
+----How to add foregin Key
+ALTER TABLE <tablename> 
+ADD constraint <constraintname>
+FOREIGN KEY(<columnname>) REFFERENCES <tablename>(<columnname>)
+
+---Remove FOREIGN Key
+ALTER TABLE <tablename>
+DROP FOREIGN KEY <constraintname>
+
+
+ALTER TABLE people
+ADD CONSTRAINT FK_PeopleAddress
+FOREIGN KEY (address_id) REFERENCES addresses(id)
+
+
+09:09:35	ALTER TABLE people ADD CONSTRAINT FK_PeopleAddress1 FOREIGN KEY (first_name) REFERENCES addresses(id)	Error Code: 3780. Referencing column 'first_name' and referenced column 'id' in foreign key constraint 'FK_PeopleAddress1' are incompatible.	0.0026 sec
+
+ALTER TABLE people
+DROP FOREIGN KEY FK_PeopleAddress
+
+
+09:11:53	ALTER TABLE people DROP FOREIGN KEY FK_PeopleAddress	Error Code: 1091. Can't DROP 'FK_PeopleAddress'; check that column/key exists	0.0030 sec
+
+
+09:14:10	ALTER TABLE people DROP FOREIGN KEY FK_PeopleAddress	0 row(s) affected Records: 0  Duplicates: 0  Warnings: 0	0.019 sec
+
+
+///////////
+ADD/Remove Unqiue
+////////
+----How to add Unqiue
+ALTER TABLE <tablename>
+ADD constraint <constraintname> UNIQUE (<columnname>)
+
+ALTER TABLE <tablename>
+DROP INDEX <constraintname>
+
+
+ALTER TABLE pets
+ADD constraint my_species UNIQUE (species)
+
+ALTER TABLE pets
+DROP INDEX my_species;
+
+//////
+Change Column name
+/////
+
+ALTER TABLE <tablename> CHANGE `old_column_name` `new_column_name` <datatype>
+
+ALTER TABLE pets CHANGE `species` `breed` varchar(20)
+
+
+DESC addresses
+
+/////
+Change DataType
+////
+DESC addresses
+ALTER TABLE addresses modify city CHAR(20);

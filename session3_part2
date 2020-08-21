@@ -1,0 +1,55 @@
+SELECT * FROM products;
+
+ALTER TABLE products ADD column coffee_origin VARCHAR(30);
+DESC products;
+
+INSERT into <table_name>(<column1>,<column2>,<column3>)VALUES('','','');
+
+INSERT into products (name,price,coffee_origin) VALUES ('EXPRESSO',2.50,'BRAZIL')
+
+INSERT into products (name,price,coffee_origin) VALUES ('MOCCHIATO',3.40,'BRAZIL'),('Cappuccino',3.50,'Costa Rica')
+
+
+INSERT into products (name,price,coffee_origin) VALUES ('Latte',2.80,'Indonesia'),('Americano',3.50,'BRAZIL'),('FLAT WHITE',3.00,'Finland')
+
+
+ALTER TABLE product Add column abc varchar(30) after id
+
+0:55:43	DELETE FROM products	Error Code: 115. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column.  To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.	0.0021 sec
+
+
+// Delete data where id is 5
+DELETE FROM products WHERE id=5;
+
+//Disable the safe mode
+SET SQL_SAFE_UPDATES=0;
+
+//Delete all data from table;
+DELETE FROM products;
+
+//Enable the safe mode
+SET SQL_SAFE_UPDATES=1;
+
+//Reset auto_increment id
+ALTER TABLE products auto_increment = 1;
+
+INSERT into products (name,price,coffee_origin) VALUES ('EXPRESSO',2.50,'BRAZIL'),('MOCCHIATO',3.40,'BRAZIL'),('Cappuccino',3.50,'Costa Rica'),('Latte',2.80,'Indonesia'),('Americano',3.50,'BRAZIL'),('FLAT WHITE',3.00,'Finland')
+
+
+INSERT INTO orders(product_id,customer_id,order_time) VALUES (6,2,'2020-0-23 09-02-11')
+
+08:14:0	INSERT INTO orders(product_id,customer_id,order_time) VALUES (,2,'2020-0-23 09-02-11')	Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`coffee_store`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`))	0.010 sec
+
+
+08:18:02	DELETE FROM products WHERE id=1	Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`coffee_store`.`orders`, CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`))	0.0061 sec
+
+SELECT * FROM customers;
+DESC orders;
+
+INSERT INTO orders(product_id,customer_id,order_time) VALUES (1,1,'2020-0-25 08-02-11');
+INSERT INTO orders(product_id,customer_id,order_time) VALUES (,2,'2020-0-23 09-02-11');
+SELECT * FROM orders;
+
+DELETE FROM products WHERE id=1;
+
+

@@ -1,0 +1,123 @@
+index
+triggers
+SP
+User Mangement
+
+///////
+triggers
+/////////
+create Database triggertest;
+use triggertest
+
+create table sales(
+    id Int primary Key,
+    product varchar(30) not null,
+    value numeric(10.2)
+)
+
+create table sales_update(
+    id Int primary key  Auto_increment,
+    product_id int not null,
+    change_at timestamp,
+    before_value numeric(10.2) not null,
+    after_value numeric(10.2) not null
+);
+
+
+delimiter $$
+create trigger before_sales_update before update on sales for each row
+begin
+	insert into sales_update (product_id,change_at,before_value,after_value)
+    values (old.id,now(),old.value,new.value);
+end$$
+
+select * from sales_update;
+
+
+/////////////////////////
+SP
+Stored Procedure
+////////////////////////
+
+create user bookinguser@localhost identified by 'password';
+
+delimiter $$
+create definer=`bookinguser@localhost` procedure `EduProc`()
+sql security definer
+begin
+select * from rooms;
+end$$
+
+
+show databases;
+use ticket_booking;
+create user testuser@localhost identified by 'password';
+
+delimiter $$
+create procedure `EduProc121`()
+sql security definer
+begin
+select * from rooms;
+end$$
+
+call EduProc121();
+
+drop procedure EduProc;
+
+delimiter $$
+create procedure `showFilms`(in length_m int, in pid int)
+begin
+select * from films where length_min>length_m and id=pid;
+end $$
+
+call showFilms(120,3);
+
+delimiter $$
+create procedure `showFilmsWithtime`(in length_m int)
+begin
+select * from films where length_min>length_m;
+end $$
+
+call showFilmsWithtime(120);
+
+select * from films;
+
+select name,length_min into @thename, @thelenght from films where id=2;
+
+select @thename, @thelength;
+
+
+delimiter $$
+create procedure `showFilm`(in theId int, out outId int, out outName varchar(250))
+begin
+select id,name into outId,outName from films where id= theId;
+end $$
+
+
+call showFilm(3,@id,@name);
+select @id, @name;
+
+
+//////////
+
+08:03:21	select * from customers where last_name="Arton" LIMIT 0, 1000	1 row(s) returned	0.0025 sec / 0.000013 sec
+
+08:06:25	explain select * from customers where last_name="Arton"	1 row(s) returned	0.0021 sec / 0.000010 sec
+
+
+show databases;
+use ticket_booking;
+
+
+show tables;
+
+explain select * from customers where last_name="Arton";
+ 
+show indexes from customers;
+create index lastnameindex on customers(last_name);
+ 
+select * from customers;
+explain select * from customers where first_name="David";
+create index firstnameindex on customers(first_name);
+
+drop index firstnameindex on customers;
